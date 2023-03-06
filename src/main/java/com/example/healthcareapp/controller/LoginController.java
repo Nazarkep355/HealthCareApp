@@ -49,8 +49,6 @@ public class LoginController {
         return responseEntity;
     }
 
-    @GetMapping("/test")
-    public ResponseEntity test() {
-        return ResponseEntity.ok(ResponseMessage.badPassword());
-    }
+
+
 }
