@@ -16,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MedicalCard {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @JoinColumn(name="user_id")
     @OneToOne

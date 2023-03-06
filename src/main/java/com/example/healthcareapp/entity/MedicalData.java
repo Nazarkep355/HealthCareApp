@@ -15,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MedicalData {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @ManyToOne
     private MedicalTopic topic;

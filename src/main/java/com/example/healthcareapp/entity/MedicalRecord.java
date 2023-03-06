@@ -14,6 +14,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class MedicalRecord {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column
     private String subject;

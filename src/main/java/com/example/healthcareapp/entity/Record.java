@@ -14,6 +14,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class Record {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @ManyToOne
     @JoinColumn(name="patient_id")
