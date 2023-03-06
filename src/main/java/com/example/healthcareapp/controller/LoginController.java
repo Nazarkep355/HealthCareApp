@@ -4,6 +4,8 @@ import com.example.healthcareapp.dto.ResponseMessage;
 import com.example.healthcareapp.entity.User;
 import com.example.healthcareapp.service.UserLoginService;
 import com.example.healthcareapp.service.Validator;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,12 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@ApiResponses
 public class LoginController {
     @Autowired
     private UserLoginService loginService;
     @Autowired
     private Validator validator;
+
 
     @PostMapping("/login")
     public ResponseEntity<User> login(User user) {

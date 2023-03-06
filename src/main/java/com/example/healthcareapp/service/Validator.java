@@ -13,7 +13,7 @@ public class Validator {
     final static private String passwordPattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
 
     public Optional<ResponseEntity> validatePassword(String password) {
-        if (Pattern.compile(passwordPattern).matcher(password).matches()) {
+        if (password!=null&&Pattern.compile(passwordPattern).matcher(password).matches()) {
             return Optional.empty();
         } else {
             ResponseEntity responseEntity = ResponseEntity
