@@ -1,6 +1,8 @@
 package com.example.healthcareapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 import java.util.List;
@@ -16,6 +18,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column
+    @Email
     private String email;
     @Column
     private String password;

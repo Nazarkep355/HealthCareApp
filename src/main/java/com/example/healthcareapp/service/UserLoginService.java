@@ -1,8 +1,11 @@
 package com.example.healthcareapp.service;
 
 import com.example.healthcareapp.entity.User;
+import com.example.healthcareapp.entity.UserRole;
 import com.example.healthcareapp.repos.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -28,6 +31,15 @@ public class UserLoginService {
         return Optional.empty();
     }
 
+    public Optional<User> register(@Valid User user){
+        Optional<User> userOptional = uRepository.findByEmail(user.getEmail());
+        if(userOptional.isPresent()){
+            return Optional.empty();
+        }
+        user.setRole(UserRole.Patient);
+        userOptional = Optional.of(uRepository.save(user));
+        return userOptional;
+    }
     public static String encodePassword(String password) {
         return Base64.getEncoder().encodeToString(password.getBytes());
     }
