@@ -1,10 +1,7 @@
 package com.example.healthcareapp.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,8 +9,9 @@ import java.util.List;
 @Table(name="medical_cards")
 @Getter
 @Setter
-
 @RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MedicalCard {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -23,5 +21,6 @@ public class MedicalCard {
     private User user;
     @OneToMany(mappedBy = "medicalCard")
     private List<MedicalData> medicalData;
+
 
 }

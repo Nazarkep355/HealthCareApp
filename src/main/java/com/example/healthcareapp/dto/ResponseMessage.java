@@ -16,7 +16,16 @@ public class ResponseMessage {
     int status;
     String error;
     List<Error> errors;
-
+    public static ResponseMessage customMessage(String message){
+        ResponseMessage rm = builder().timestamp(Date.from(Instant.now()))
+                .status(400)
+                .error("Bad Request")
+                .errors(List.of(Error.builder()
+                        .codes(List.of(message))
+                        .build()))
+                .build();
+        return rm;
+    }
     public static ResponseMessage badPassword() {
         ResponseMessage rm = builder().timestamp(Date.from(Instant.now()))
                 .status(400)

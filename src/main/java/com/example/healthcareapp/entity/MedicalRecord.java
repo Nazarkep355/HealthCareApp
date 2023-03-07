@@ -1,17 +1,15 @@
 package com.example.healthcareapp.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "medical_records")
 @Getter
 @Setter
-
 @RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MedicalRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -26,5 +24,6 @@ public class MedicalRecord {
     @ManyToOne
     @JoinColumn(name = "data_id")
     private MedicalData medicalData;
+
 
 }
