@@ -46,8 +46,4 @@ public class RecordController {
 
 
 
-//    @GetMapping("/test")
-//    public List getAll() {
-////       return recordService.getAllAbleDoctors(Date.from(Instant.now()));
-//    }
 }
