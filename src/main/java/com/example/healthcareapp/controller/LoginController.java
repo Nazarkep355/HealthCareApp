@@ -35,7 +35,7 @@ public class LoginController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@Valid User user) {
+    public ResponseEntity register(@Valid User user,User user1) {
         Optional<ResponseEntity> reOptional = validator
                 .validatePassword(user.getPassword());
         if (reOptional.isPresent()) {

@@ -36,7 +36,10 @@ public class UserLoginService {
         if(userOptional.isPresent()){
             return Optional.empty();
         }
+        user.setPassword(encodePassword(user.getPassword()));
         user.setRole(UserRole.Patient);
+        user.setMedicalCard(null);
+        user.setId(null);
         userOptional = Optional.of(uRepository.save(user));
         return userOptional;
     }
