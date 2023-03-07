@@ -1,16 +1,26 @@
 package com.example.healthcareapp.service;
 
+import com.example.healthcareapp.entity.Doctor;
+import com.example.healthcareapp.entity.MedicalTopic;
 import com.example.healthcareapp.entity.Record;
 import com.example.healthcareapp.entity.User;
+import com.example.healthcareapp.repos.DoctorRepository;
+import com.example.healthcareapp.repos.MedicalTopicRepository;
 import com.example.healthcareapp.repos.RecordRepository;
 import com.example.healthcareapp.repos.UserRepository;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RecordService {
@@ -18,6 +28,10 @@ public class RecordService {
     private RecordRepository rRepository;
     @Autowired
     private UserRepository uRepository;
+    @Autowired
+    private DoctorRepository doctorRepository;
+    @Autowired
+    private MedicalTopicRepository mtRepository;
 
     public Page<Record> getAllRecordsOfUser(Pageable pageable,Long user_id){
         Optional<User> userOptional = uRepository.findById(user_id);
@@ -27,4 +41,48 @@ public class RecordService {
         return rRepository.findAllByPatient(userOptional.get(),pageable);
 
     }
+
+    public Record createNewRecord(Record record){
+        record.setPatient(uRepository.findById(record.getPatient().getId()).orElseThrow(()->new IllegalArgumentException("Patient not found")));
+        record.setDoctor(doctorRepository.findById(record.getDoctor()
+                .getId()).orElseThrow(()->new IllegalArgumentException("Doctor not found")));
+        record.setTopic(mtRepository.findById(record.getTopic().getId())
+                .orElseThrow(()->new IllegalArgumentException("Topic not found")));
+        Date dateBefore = new Date(record.getDate().getTime());
+        dateBefore.setHours(dateBefore.getHours()-1);
+        Date dateAfter = new Date(record.getDate().getTime());
+        dateAfter.setHours(dateAfter.getHours()+1);
+        List<Record> blockedRecords = rRepository
+                .findAllByDateAndAndDateAfter(dateBefore,dateAfter,record.getTopic());
+        List<Doctor> blockedDoctors = blockedRecords.stream()
+                .map(Record::getDoctor)
+                .toList();
+        if(blockedDoctors.contains(record.getDoctor())){
+            List<Doctor> doctors = doctorRepository.findDoctorsByMedicalTopic(record.getTopic());
+            doctors.removeAll(blockedDoctors);
+            if(doctors.size()<1) {
+                throw new IllegalArgumentException("No free doctor");
+            }
+            record.setDoctor(doctors.get(0));
+        }
+        record.setId(null);
+        return rRepository.save(record);
+    }
+    public Page<Record> getAllRecordsOfDoctor(Pageable pageable,Long doctor_id){
+        Optional<Doctor> doctorOptional = doctorRepository.findById(doctor_id);
+        if(doctorOptional.isPresent()){
+            throw new IllegalArgumentException("Doctor not found");
+        }
+        return rRepository.findAllByDoctor(doctorOptional.get(),pageable);
+    }
+
+//    public List<Doctor> getAllAbleDoctors(Date date){
+//        Optional<MedicalTopic> topic = mtRepository.findById(1l);
+//        Timestamp afterDate = new Timestamp(date.getTime());
+//        afterDate.setHours(date.getHours()+1);
+//        Timestamp beforeDate = new Timestamp(date.getTime());
+//        beforeDate.setHours(date.getHours()-1);
+//        Optional<Record> record = rRepository.findById(1l);
+//       return doctorRepository.findAbleDoctors(afterDate,topic.get());
+//    }
 }
