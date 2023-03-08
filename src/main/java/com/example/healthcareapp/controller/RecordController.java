@@ -35,6 +35,8 @@ public class RecordController {
     }
 
     @PostMapping
+    @ApiResponse(description = "Створює запис до лікаря по ід лікаря, топіку, юзера, дати, якщо є лікар," +
+            " не вільний на цей час, буде намагатися знайти вільного")
     public ResponseEntity createRecord(@RequestBody Record record) {
         try {
             return ResponseEntity.ok(recordService.createNewRecord(record));
@@ -43,6 +45,8 @@ public class RecordController {
                     .body(ResponseMessage.customMessage(e.getMessage()));
         }
     }
+
+
 
 
 

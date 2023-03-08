@@ -1,7 +1,10 @@
 package com.example.healthcareapp.service;
 
+import com.example.healthcareapp.entity.MedicalCard;
+import com.example.healthcareapp.entity.MedicalData;
 import com.example.healthcareapp.entity.User;
 import com.example.healthcareapp.entity.UserRole;
+import com.example.healthcareapp.repos.MedicalCardRepository;
 import com.example.healthcareapp.repos.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +21,8 @@ import java.util.Optional;
 public class UserLoginService {
     @Autowired
     private UserRepository uRepository;
-
+    @Autowired
+    private MedicalCardRepository medicalCardRepository;
     public Optional<User> login(String email, String password) {
         Optional<User> user = uRepository.findByEmail(email);
         if (user.isEmpty()) {
@@ -41,6 +45,12 @@ public class UserLoginService {
         user.setMedicalCard(null);
         user.setId(null);
         userOptional = Optional.of(uRepository.save(user));
+        MedicalCard medicalCard = MedicalCard.builder()
+                .user(userOptional.orElseThrow(()->new IllegalArgumentException("Card cant be created")))
+                .build();
+        medicalCardRepository.save(medicalCard);
+
+
         return userOptional;
     }
     public static String encodePassword(String password) {

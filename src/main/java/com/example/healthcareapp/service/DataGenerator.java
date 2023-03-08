@@ -2,10 +2,7 @@ package com.example.healthcareapp.service;
 
 import com.example.healthcareapp.entity.*;
 import com.example.healthcareapp.entity.Record;
-import com.example.healthcareapp.repos.DoctorRepository;
-import com.example.healthcareapp.repos.MedicalTopicRepository;
-import com.example.healthcareapp.repos.RecordRepository;
-import com.example.healthcareapp.repos.UserRepository;
+import com.example.healthcareapp.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -25,6 +22,12 @@ public class DataGenerator {
     private MedicalTopicRepository mtRepository;
     @Autowired
     private RecordRepository recordRepository;
+    @Autowired
+    private MedicalCardRepository cardRepository;
+    @Autowired
+    private MedicalDataRepository dataRepository;
+    @Autowired
+    private MedicalRecordRepository medicalRecordRepository;
 
     public void generate() {
         List<User> users = List.of(new User(1l, "email@mail.com",
@@ -50,19 +53,40 @@ public class DataGenerator {
                 .id(1l)
                 .medicalTopic(topics.get(0))
                 .build());
-        Record record =Record.builder()
+        Record record = Record.builder()
                 .date(Date.from(Instant.now()))
                 .doctor(doctors.get(0))
                 .patient(users.get(0))
                 .topic(topics.get(0))
                 .id(1l)
                 .build();
-        record.getDate().setHours(record.getDate().getHours()+1);
+        record.getDate().setHours(record.getDate().getHours() + 1);
         List<Record> records = List.of(record);
+        MedicalCard card = MedicalCard.builder()
+                .id(1l)
+                .user(users.get(0))
+                .build();
+
+        MedicalData medicalData = MedicalData.builder()
+                .id(1l)
+                .topic(topics.get(0))
+                .medicalCard(card)
+                .records(null)
+                .build();
         userRepository.saveAll(users);
         mtRepository.saveAll(topics);
         doctorRepository.saveAll(doctors);
         recordRepository.saveAll(records);
 
+        cardRepository.save(card);
+        dataRepository.save(medicalData);
+        MedicalRecord medicalRecord = MedicalRecord.builder()
+                .id(1l)
+                .medicalData(dataRepository.findById(1l).get())
+                .author(doctors.get(0))
+                .subject("Left leg")
+                .data("Left leg is OK")
+                .build();
+        medicalRecordRepository.save(medicalRecord);
     }
 }

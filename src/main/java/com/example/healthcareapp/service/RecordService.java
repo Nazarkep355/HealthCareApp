@@ -76,13 +76,5 @@ public class RecordService {
         return rRepository.findAllByDoctor(doctorOptional.get(),pageable);
     }
 
-//    public List<Doctor> getAllAbleDoctors(Date date){
-//        Optional<MedicalTopic> topic = mtRepository.findById(1l);
-//        Timestamp afterDate = new Timestamp(date.getTime());
-//        afterDate.setHours(date.getHours()+1);
-//        Timestamp beforeDate = new Timestamp(date.getTime());
-//        beforeDate.setHours(date.getHours()-1);
-//        Optional<Record> record = rRepository.findById(1l);
-//       return doctorRepository.findAbleDoctors(afterDate,topic.get());
-//    }
+
 }
