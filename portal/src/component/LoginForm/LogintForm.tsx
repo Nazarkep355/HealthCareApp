@@ -1,22 +1,23 @@
-import * as React from 'react';
+import { FC, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { FC } from 'react';
+
 import './loginForm.scss'
+import { GetUser } from '../../Services/UserServise';
 
 const LoginForm: FC = () => {
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		const data = new FormData(event.currentTarget);
-		console.log({
-		  email: data.get('email'),
-		  password: data.get('password'),
-		});
+	const [email, setEmail] = useState<string>(null);
+	const [password, setPassword] = useState<string>(null);
+
+	const login = async (): Promise<void> => {
+		const a = await GetUser(email, password);
+		console.log(a);
 	};
+
 	return(
 		<div className='loginContainer'>
 			<Container component="main" maxWidth="xs">
@@ -30,7 +31,7 @@ const LoginForm: FC = () => {
 						margin: '0'
 					}}
 				>
-					<Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+					<Box>
 						<TextField
 							margin="normal"
 							required
@@ -40,6 +41,7 @@ const LoginForm: FC = () => {
 							name="email"
 							autoComplete="email"
 							autoFocus
+							onChange={(val) => setEmail(val.target.value)}
 						/>
 						<TextField
 							margin="normal"
@@ -50,6 +52,7 @@ const LoginForm: FC = () => {
 							type="password"
 							id="password"
 							autoComplete="current-password"
+							onChange={(val) => setPassword(val.target.value)}
 						/>
 						<FormControlLabel
 							control={<Checkbox value="remember" color="primary" />}
@@ -60,6 +63,7 @@ const LoginForm: FC = () => {
 							fullWidth
 							variant="contained"
 							sx={{ mt: 3, mb: 2 }}
+							onClick={login}
 						>
 							Увійти
 						</Button>

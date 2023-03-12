@@ -23,6 +23,4 @@ public class MedicalData {
     @ManyToOne
     @JoinColumn(name ="card_id")
     private MedicalCard medicalCard;
-
-
 }
