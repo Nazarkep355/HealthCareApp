@@ -1,5 +1,6 @@
 package com.example.healthcareapp.controller;
 
+import com.example.healthcareapp.dto.Models.DoctorModel;
 import com.example.healthcareapp.entity.Doctor;
 import com.example.healthcareapp.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class DoctorController {
     @Autowired
     private DoctorService doctorService;
     @GetMapping()
-    public Page<Doctor> showAllDoctors(Pageable pageable){
+    public Page<DoctorModel> showAllDoctors(Pageable pageable){
         return doctorService.getAllDoctors(pageable);
     }
 
