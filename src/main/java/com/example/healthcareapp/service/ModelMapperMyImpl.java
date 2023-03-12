@@ -13,7 +13,12 @@ public class ModelMapperMyImpl {
     final private ModelMapper modelMapper = new ModelMapper();
 
     public List<DoctorModel> doctorModels(List<Doctor> doctors){
-        return doctors.stream().map(doctor -> {return modelMapper.map(doctor,DoctorModel.class);})
+        return listOfModels(doctors,DoctorModel.class);
+    }
+
+
+    public <T,C> List<T> listOfModels(List<C> objects,Class<T> tClass){
+        return objects.stream().map(object->{return modelMapper.map(object,tClass);})
                 .collect(Collectors.toList());
     }
 }
