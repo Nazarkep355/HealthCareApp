@@ -16,6 +16,9 @@ const LoginForm: FC = () => {
 	const login = async (): Promise<void> => {
 		const a = await GetUser(email, password);
 		console.log(a);
+		console.log(a);
+		console.log(a);
+
 	};
 
 	return(
