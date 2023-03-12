@@ -21,7 +21,7 @@ public class MedicalCardController {
         return responseEntity;
     }
     @PutMapping("/put")
-    public ResponseEntity findByUserId(@RequestBody MedicalCard medicalCard) {
+    public ResponseEntity putByUserId(@RequestBody MedicalCard medicalCard) {
         ResponseEntity responseEntity = ErrorCatcher.
                 catchException(()->dataService.putMedicalCard(medicalCard));
         return responseEntity;

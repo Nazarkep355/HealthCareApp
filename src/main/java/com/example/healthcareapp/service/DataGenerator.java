@@ -66,7 +66,10 @@ public class DataGenerator {
                 .id(1l)
                 .user(users.get(0))
                 .build();
-
+        List<MedicalCard> cards = List.of(card,MedicalCard.builder()
+                .id(2l)
+                .user(users.get(1))
+                .build());
         MedicalData medicalData = MedicalData.builder()
                 .id(1l)
                 .topic(topics.get(0))
@@ -78,7 +81,7 @@ public class DataGenerator {
         doctorRepository.saveAll(doctors);
         recordRepository.saveAll(records);
 
-        cardRepository.save(card);
+        cardRepository.saveAll(cards);
         dataRepository.save(medicalData);
         MedicalRecord medicalRecord = MedicalRecord.builder()
                 .id(1l)

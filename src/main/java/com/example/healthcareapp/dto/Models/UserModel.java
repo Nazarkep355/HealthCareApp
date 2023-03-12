@@ -1,7 +1,9 @@
 package com.example.healthcareapp.dto.Models;
 
 import com.example.healthcareapp.entity.UserRole;
+import lombok.Getter;
 
+@Getter
 public class UserModel {
     public Long getId() {
         return id;
@@ -48,4 +50,5 @@ public class UserModel {
     private String firstName;
     private String secondName;
     private UserRole role;
+
 }

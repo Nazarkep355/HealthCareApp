@@ -32,7 +32,8 @@ public class MedicalDataService {
     public MedicalCard putMedicalCard(MedicalCard card){
         medicalRecordRepository.saveAll(card.getMedicalData().stream()
                 .map(a->a.getRecords())
-                .flatMap(a->a.stream()).filter(a->a.getSubject()!=null&&a.getAuthor()!=null&&a.getData()!=null).collect(Collectors.toList()));
+                .flatMap(a->a.stream()).filter(a->a.getSubject()!=null&&a.getAuthor()!=null&&a.getData()!=null)
+                .collect(Collectors.toList()));
         MedicalCard medicalCard= mCardRepository.save(card);
         medicalCard.getMedicalData().forEach(a->a.setMedicalCard(null));
         medicalCard.getUser().setMedicalCard(null);

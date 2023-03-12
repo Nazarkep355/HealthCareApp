@@ -28,7 +28,8 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<UserModel> login(String email, String password) { // как мне тебе целую модель юзера передать при лонике ?
+    public ResponseEntity<UserModel> login(String email, String password) {
+        // как мне тебе целую модель юзера передать при лонике ?
         Optional<User> userOptional = loginService.login(email,password);
         if (userOptional.isEmpty()) {
             return ResponseEntity.status(401).build();
@@ -60,5 +61,4 @@ public class LoginController {
         UserModel dest = modelMapper.map(user, UserModel.class);
         return dest;
     };
-
 }
