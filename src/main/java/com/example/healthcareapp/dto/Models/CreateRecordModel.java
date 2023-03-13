@@ -11,8 +11,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class CreateRecordModel {
-    Date date;
-    UserModel user;
-    DoctorModel author;
-    MedicalTopic topic;
+    private Long id;
+    private Date date;
+    private UserModel user;
+    private DoctorModel author;
+    private MedicalTopic topic;
 }

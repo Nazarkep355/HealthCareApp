@@ -40,7 +40,6 @@ public class AnalysisController {
         if (StringUtils.isNumeric(date)) {
             date1 = new Date(Long.parseLong(date));
         } else {
-
             date1 = java.sql.Timestamp.valueOf(LocalDateTime.parse(date));
         }
         CreateRecordModel recordModel = CreateRecordModel.builder()
