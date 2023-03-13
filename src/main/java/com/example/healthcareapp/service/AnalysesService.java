@@ -1,10 +1,12 @@
 package com.example.healthcareapp.service;
 
 import com.example.healthcareapp.dto.Models.AnalysisModel;
+import com.example.healthcareapp.dto.Models.CreateRecordModel;
 import com.example.healthcareapp.entity.Analysis;
 import com.example.healthcareapp.entity.User;
 import com.example.healthcareapp.repos.AnalysisRepository;
 import com.example.healthcareapp.repos.UserRepository;
+import com.example.healthcareapp.util.ErrorCatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -30,7 +32,14 @@ public class AnalysesService {
 
 
         List<AnalysisModel> models = modelMapperMy.listOfModels(analysisPage.getContent(), AnalysisModel.class);
-        return new PageImpl<>(models,pageable,analysisPage.getTotalPages());
+        return new PageImpl<>(models, pageable, analysisPage.getTotalPages());
 
+    }
+
+    public AnalysisModel scheduleAnalysis(CreateRecordModel createRecordModel) {
+        Analysis analysis = modelMapperMy.mapClass(createRecordModel, Analysis.class);
+        analysis = analysisRepository.save(analysis);
+
+        return modelMapperMy.mapClass(analysis,AnalysisModel.class);
     }
 }

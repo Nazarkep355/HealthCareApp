@@ -16,6 +16,9 @@ public class ModelMapperMyImpl {
         return listOfModels(doctors,DoctorModel.class);
     }
 
+    public <T,C> T  mapClass(C cObject,Class<T> tClass){
+       return modelMapper.map(cObject,tClass);
+    }
 
     public <T,C> List<T> listOfModels(List<C> objects,Class<T> tClass){
         return objects.stream().map(object->{return modelMapper.map(object,tClass);})
