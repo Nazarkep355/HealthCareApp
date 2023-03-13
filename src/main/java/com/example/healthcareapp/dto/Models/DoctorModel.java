@@ -5,11 +5,13 @@ import com.example.healthcareapp.entity.User;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.modelmapper.ModelMapper;
 @Getter
 @Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 public class DoctorModel {
 
     private Long id;

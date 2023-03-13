@@ -1,11 +1,13 @@
 package com.example.healthcareapp.dto.Models;
 
 import com.example.healthcareapp.entity.UserRole;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserModel {
 
     public Long id;

@@ -4,13 +4,15 @@ import com.example.healthcareapp.entity.Doctor;
 import com.example.healthcareapp.entity.MedicalData;
 import com.example.healthcareapp.entity.MedicalTopic;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
 @Getter
 @Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AnalysisModel {
 
     private Long id;
