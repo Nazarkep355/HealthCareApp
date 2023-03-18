@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import javax.print.Doc;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DataGenerator {
@@ -30,76 +32,346 @@ public class DataGenerator {
     private MedicalRecordRepository medicalRecordRepository;
     @Autowired
     private AnalysisRepository analysisRepository;
+    private static List<User> users = new ArrayList<>();
+    private static List<MedicalTopic> topics = new ArrayList<>();
+    private static List<Doctor> doctors = new ArrayList<>();
+    private static List<MedicalCard> cards = new ArrayList<>();
+    private static List<Record> records = new ArrayList<>();
+    private static List<MedicalData> data = new ArrayList<>();
+    private static List<Analysis> analyses = new ArrayList<>();
+    private static List<MedicalRecord> medicalRecords = new ArrayList<>();
+    private List<User> createUsers() {
 
-    public void generate() {
-        List<User> users = List.of(new User(1l, "email@mail.com",
-                        "UGFzc3dvcmQ=",
-                        "Andy", "Daniel", UserRole.Patient,
-                        null),
-                User.builder()
-                        .id(2l)
-                        .role(UserRole.Doctor)
-                        .email("doctor@gmail.com")
-                        .firstName("John")
-                        .secondName("Watson")
-                        .password("SDBsbWVzU2hlcmxvY2s=")
-                        .medicalCard(null)
-                        .build());
-        List<MedicalTopic> topics = List.of(
+        users.add(User.builder()
+                .id(2l)
+                .role(UserRole.Doctor)
+                .email("doctor@gmail.com")
+                .firstName("John")
+                .secondName("Watson")
+                .password("SDBsbWVzU2hlcmxvY2s=")
+                .medicalCard(null)
+                .build());
+        users.add(User.builder()
+                .id(6l)
+                .role(UserRole.Doctor)
+                .email("doctor1@gmail.com")
+                .firstName("Lucius")
+                .secondName("Fox")
+                .password("UGFzc3dvcmQ=")
+                .medicalCard(null)
+                .build());
+        users.add(User.builder()
+                .id(7l)
+                .role(UserRole.Doctor)
+                .email("doctor2@gmail.com")
+                .firstName("Akiko")
+                .secondName("Yosano")
+                .password("UGFzc3dvcmQ=")
+                .medicalCard(null)
+                .build());
+
+        users.add(User.builder()
+                .id(9l)
+                .role(UserRole.Doctor)
+                .email("doctor3@gmail.com")
+                .firstName("Orihime")
+                .secondName("Inoue")
+                .password("UGFzc3dvcmQ=")
+                .medicalCard(null)
+                .build());
+
+        users.add(new User(1l, "email@mail.com",
+                "UGFzc3dvcmQ=",
+                "Andy", "Daniel", UserRole.Patient,
+                null));
+        users.add(User.builder()
+                .id(3l)
+                .role(UserRole.Patient)
+                .email("user1@gmail.com")
+                .firstName("Sherlock")
+                .secondName("Holmes")
+                .password("UGFzc3dvcmQ=")
+                .medicalCard(null)
+                .build());
+        users.add(User.builder()
+                .id(4l)
+                .role(UserRole.Patient)
+                .email("user2@gmail.com")
+                .firstName("Jim")
+                .secondName("Gordon")
+                .password("UGFzc3dvcmQ=")
+                .medicalCard(null)
+                .build());
+        users.add(User.builder()
+                .id(5l)
+                .role(UserRole.Patient)
+                .email("user3@gmail.com")
+                .firstName("Barbara")
+                .secondName("Gordon")
+                .password("UGFzc3dvcmQ=")
+                .medicalCard(null)
+                .build());
+
+        users.add(User.builder()
+                .id(8l)
+                .role(UserRole.Patient)
+                .email("user4@gmail.com")
+                .firstName("Dazai")
+                .secondName("Osamu")
+                .password("UGFzc3dvcmQ=")
+                .medicalCard(null)
+                .build());
+        List<User> sorted = users.stream().sorted((a,b)->a.getId().compareTo(b.getId())).collect(Collectors.toList());
+        return userRepository.saveAll(sorted);
+
+    }
+
+    private List<Doctor> createDoctors() {
+        doctors.add(Doctor.builder()
+                .user(users.get(0))
+                .id(1l)
+                .medicalTopic(topics.get(0))
+                .build());
+        doctors.add(Doctor.builder()
+                .user(users.get(1))
+                .id(2l)
+                .medicalTopic(topics.get(1))
+                .build());
+        doctors.add(Doctor.builder()
+                .user(users.get(2))
+                .id(3l)
+                .medicalTopic(topics.get(2))
+                .build());
+        doctors.add(Doctor.builder()
+                .user(users.get(3))
+                .id(4l)
+                .medicalTopic(topics.get(3))
+                .build());
+        return doctorRepository.saveAll(doctors);
+    }
+
+    private List<MedicalTopic> createTopics() {
+        topics.add(
                 MedicalTopic.builder()
                         .name("Surgery")
                         .id(1l)
                         .build());
-        List<Doctor> doctors = List.of(Doctor.builder()
-                .user(users.get(1))
-                .id(1l)
-                .medicalTopic(topics.get(0))
-                .build());
-        Analysis analysis = Analysis.builder()
-                .date(Date.from(Instant.now()))
-                .author(doctors.get(0))
-                .user(users.get(0))
-                .topic(topics.get(0))
-                .id(1l)
-                .build();
-        analysis.getDate().setHours(analysis.getDate().getHours() + 1);
-        Record record = Record.builder()
-                .date(Date.from(Instant.now()))
+        topics.add(
+                MedicalTopic.builder()
+                        .name("Ophthalmology")
+                        .id(2l)
+                        .build());
+        topics.add(
+                MedicalTopic.builder()
+                        .name("Gastroenterology")
+                        .id(3l)
+                        .build());
+        topics.add(
+                MedicalTopic.builder()
+                        .name("Dentistry")
+                        .id(4l)
+                        .build());
+        return mtRepository.saveAll(topics);
+    }
+
+    private List<Record> createRecords() {
+        Date date1 = Date.from(Instant.now());
+        date1.setHours(date1.getHours() + 1);
+        Date date2 = Date.from(Instant.now());
+        date2.setDate(date2.getDate() - 3);
+        Date date3 = Date.from(Instant.now());
+        date3.setDate(date3.getDate() - 6);
+        Date date4 = Date.from(Instant.now());
+        date4.setDate(date3.getDate() - 8);
+        Date date5 = Date.from(Instant.now());
+        date5.setDate(date3.getDate() + 5);
+        records.add(Record.builder()
+                .date(date1)
                 .doctor(doctors.get(0))
                 .patient(users.get(0))
                 .topic(topics.get(0))
                 .id(1l)
-                .build();
-        record.getDate().setHours(record.getDate().getHours() + 1);
-        List<Record> records = List.of(record);
-        MedicalCard card = MedicalCard.builder()
+                .build());
+        records.add(Record.builder()
+                .date(date2)
+                .doctor(doctors.get(0))
+                .patient(users.get(0))
+                .topic(topics.get(0))
+                .id(2l)
+                .build());
+        records.add(Record.builder()
+                .date(date3)
+                .doctor(doctors.get(0))
+                .patient(users.get(0))
+                .topic(topics.get(0))
+                .id(3l)
+                .build());
+        records.add(Record.builder()
+                .date(date4)
+                .doctor(doctors.get(0))
+                .patient(users.get(0))
+                .topic(topics.get(0))
+                .id(4l)
+                .build());
+        records.add(Record.builder()
+                .date(date5)
+                .doctor(doctors.get(0))
+                .patient(users.get(0))
+                .topic(topics.get(0))
+                .id(5l)
+                .build());
+        return recordRepository.saveAll(records);
+    }
+
+    private List<Analysis> createAnalyses() {
+        Date date1 = Date.from(Instant.now());
+        date1.setDate(date1.getDate()-3);
+        Date date2 = Date.from(Instant.now());
+        date2.setDate(date1.getDate()-2);
+        Date date3 = Date.from(Instant.now());
+        date3.setDate(date1.getDate()-4);
+        Date date4 = Date.from(Instant.now());
+        date4.setDate(date1.getDate()-1);
+        Date date5 = Date.from(Instant.now());
+        date5.setDate(date1.getDate()+3);
+        analyses.add(Analysis.builder()
+                .date(date1)
+                .author(doctors.get(0))
+                .user(users.get(0))
+                .topic(topics.get(0))
+                .subject("Left leg")
+                .result("Left leg is OK")
+                .id(1l)
+                .build());
+        analyses.add(Analysis.builder()
+                .date(date2)
+                .author(doctors.get(0))
+                .user(users.get(0))
+                .topic(topics.get(0))
+                .subject("Right leg")
+                .result("Right leg is OK")
+                .id(2l)
+                .build());
+        analyses.add(Analysis.builder()
+                .date(date1)
+                .author(doctors.get(0))
+                .user(users.get(0))
+                .topic(topics.get(0))
+                .subject("Right hand")
+                .result("Right hand is OK")
+                .id(3l)
+                .build());
+        analyses.add(Analysis.builder()
+                .date(date1)
+                .author(doctors.get(0))
+                .user(users.get(0))
+                .topic(topics.get(0))
+                .subject("Left hand")
+                .result("Left hand is OK")
+                .id(4l)
+                .build());
+        analyses.add(Analysis.builder()
+                .date(date1)
+                .author(doctors.get(0))
+                .user(users.get(0))
+                .topic(topics.get(0))
+                .id(5l)
+                .build());
+        return analysisRepository.saveAll(analyses);
+    }
+
+    private List<MedicalCard> createCards(){
+        cards.add(MedicalCard.builder()
                 .id(1l)
                 .user(users.get(0))
-                .build();
-        List<MedicalCard> cards = List.of(card,MedicalCard.builder()
+                .build());
+        cards.add(MedicalCard.builder()
                 .id(2l)
                 .user(users.get(1))
                 .build());
-        MedicalData medicalData = MedicalData.builder()
+        cards.add(MedicalCard.builder()
+                .id(3l)
+                .user(users.get(2))
+                .build());
+        cards.add(MedicalCard.builder()
+                .id(4l)
+                .user(users.get(3))
+                .build());
+        cards.add(MedicalCard.builder()
+                .id(5l)
+                .user(users.get(4))
+                .build());
+        cards.add(MedicalCard.builder()
+                .id(6l)
+                .user(users.get(5))
+                .build());
+        cards.add(MedicalCard.builder()
+                .id(7l)
+                .user(users.get(6))
+                .build());
+        cards.add(MedicalCard.builder()
+                .id(8l)
+                .user(users.get(7))
+                .build());
+        cards.add(MedicalCard.builder()
+                .id(9l)
+                .user(users.get(8))
+                .build());
+        return cardRepository.saveAll(cards);
+    }
+
+    private List<MedicalData> createData(){
+        for(MedicalCard card : cards){
+            data.add(MedicalData.builder()
+                    .id(card.getId())
+                    .topic(topics.get(0))
+                    .medicalCard(card)
+                    .records(null)
+                    .build());
+        }
+        return dataRepository.saveAll(data);
+    }
+    List<MedicalRecord> createMedRecords(){
+        medicalRecords.add( MedicalRecord.builder()
                 .id(1l)
-                .topic(topics.get(0))
-                .medicalCard(card)
-                .records(null)
-                .build();
-        userRepository.saveAll(users);
-        mtRepository.saveAll(topics);
-        doctorRepository.saveAll(doctors);
-        recordRepository.saveAll(records);
-        analysisRepository.save(analysis);
-        cardRepository.saveAll(cards);
-        dataRepository.save(medicalData);
-        MedicalRecord medicalRecord = MedicalRecord.builder()
-                .id(1l)
-                .medicalData(dataRepository.findById(1l).get())
+                .medicalData(data.get(0))
                 .author(doctors.get(0))
                 .subject("Left leg")
                 .data("Left leg is OK")
-                .build();
-        medicalRecordRepository.save(medicalRecord);
+                .build());
+        medicalRecords.add( MedicalRecord.builder()
+                .id(2l)
+                .medicalData(data.get(0))
+                .author(doctors.get(0))
+                .subject("Right leg")
+                .data("Right leg is OK")
+                .build());
+        medicalRecords.add( MedicalRecord.builder()
+                .id(3l)
+                .medicalData(data.get(0))
+                .author(doctors.get(0))
+                .subject("Left hand")
+                .data("Left hand is OK")
+                .build());
+        medicalRecords.add( MedicalRecord.builder()
+                .id(4l)
+                .medicalData(data.get(0))
+                .author(doctors.get(0))
+                .subject("Right hand")
+                .data("Right hand is OK")
+                .build());
+        return medicalRecordRepository.saveAll(medicalRecords);
+    }
+    public void generate() {
+        users = createUsers();
+        topics = createTopics();
+        doctors = createDoctors();
+        records = createRecords();
+        analyses = createAnalyses();
+        cards = createCards();
+        data = createData();
+        medicalRecords =createMedRecords();
+        users = userRepository.findAll();
+        users = null;
     }
 }
