@@ -1,6 +1,7 @@
 package com.example.healthcareapp.service;
 
 import com.example.healthcareapp.dto.Models.CreateRecordModel;
+import com.example.healthcareapp.dto.Models.RecordModel;
 import com.example.healthcareapp.dto.Models.UserModel;
 import com.example.healthcareapp.entity.Doctor;
 import com.example.healthcareapp.entity.MedicalTopic;
@@ -14,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -37,12 +39,15 @@ public class RecordService {
     @Autowired
     private ModelMapperMyImpl mapperMy;
 
-    public Page<Record> getAllRecordsOfUser(Pageable pageable,Long user_id){
+    public Page<RecordModel> getAllRecordsOfUser(Pageable pageable,Long user_id){
         Optional<User> userOptional = uRepository.findById(user_id);
         if(userOptional.isEmpty()){
             throw new IllegalArgumentException("User Not Found");
         }
-        return rRepository.findAllByPatient(userOptional.get(),pageable);
+        Page<Record> recordPage =rRepository.findAllByPatient(userOptional.get(),pageable);
+        List<RecordModel> models = mapperMy.listOfModels(recordPage.getContent(), RecordModel.class);
+        Page<RecordModel> modelPage = new PageImpl<>(models,pageable,recordPage.getTotalPages());
+        return modelPage;
 
     }
 
