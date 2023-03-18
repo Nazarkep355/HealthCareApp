@@ -1,24 +1,21 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "es6",
-    "module": "esnext",
-    "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
-    "sourceMap": true,
-    "jsx": "react-jsx",
-    "allowJs": false,
-    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
     "moduleResolution": "node",
-    "lib": [
-      "esnext",
-      "es5",
-      "es6",
-      "es7",
-      "es2017",
-      "dom",
-      "esnext.asynciterable"
-    ],
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src"]
 }
