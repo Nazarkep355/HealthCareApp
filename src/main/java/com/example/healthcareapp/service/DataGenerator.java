@@ -28,6 +28,8 @@ public class DataGenerator {
     private MedicalDataRepository dataRepository;
     @Autowired
     private MedicalRecordRepository medicalRecordRepository;
+    @Autowired
+    private AnalysisRepository analysisRepository;
 
     public void generate() {
         List<User> users = List.of(new User(1l, "email@mail.com",
@@ -53,6 +55,14 @@ public class DataGenerator {
                 .id(1l)
                 .medicalTopic(topics.get(0))
                 .build());
+        Analysis analysis = Analysis.builder()
+                .date(Date.from(Instant.now()))
+                .author(doctors.get(0))
+                .user(users.get(0))
+                .topic(topics.get(0))
+                .id(1l)
+                .build();
+        analysis.getDate().setHours(analysis.getDate().getHours() + 1);
         Record record = Record.builder()
                 .date(Date.from(Instant.now()))
                 .doctor(doctors.get(0))
@@ -80,7 +90,7 @@ public class DataGenerator {
         mtRepository.saveAll(topics);
         doctorRepository.saveAll(doctors);
         recordRepository.saveAll(records);
-
+        analysisRepository.save(analysis);
         cardRepository.saveAll(cards);
         dataRepository.save(medicalData);
         MedicalRecord medicalRecord = MedicalRecord.builder()

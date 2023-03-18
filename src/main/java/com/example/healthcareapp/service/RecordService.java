@@ -1,5 +1,7 @@
 package com.example.healthcareapp.service;
 
+import com.example.healthcareapp.dto.Models.CreateRecordModel;
+import com.example.healthcareapp.dto.Models.UserModel;
 import com.example.healthcareapp.entity.Doctor;
 import com.example.healthcareapp.entity.MedicalTopic;
 import com.example.healthcareapp.entity.Record;
@@ -32,6 +34,8 @@ public class RecordService {
     private DoctorRepository doctorRepository;
     @Autowired
     private MedicalTopicRepository mtRepository;
+    @Autowired
+    private ModelMapperMyImpl mapperMy;
 
     public Page<Record> getAllRecordsOfUser(Pageable pageable,Long user_id){
         Optional<User> userOptional = uRepository.findById(user_id);
@@ -67,6 +71,20 @@ public class RecordService {
         }
         record.setId(null);
         return rRepository.save(record);
+    }
+
+    public CreateRecordModel createByRecordModel(CreateRecordModel createRecordModel){
+        Record record = mapperMy.mapClass(createRecordModel,Record.class);
+        record.setPatient(uRepository.findById(createRecordModel.getUser().getId())
+                .orElseThrow(()->new IllegalArgumentException("User not found")));
+        record.setDoctor(doctorRepository.findById(createRecordModel.getAuthor().getId())
+                .orElseThrow(()->new IllegalArgumentException("Doctor not found")));
+        record = createNewRecord(record);
+        createRecordModel = mapperMy.mapClass(record,CreateRecordModel.class);
+        createRecordModel.setUser(mapperMy.mapClass(record.getPatient(), UserModel.class));
+        return createRecordModel;
+
+
     }
     public Page<Record> getAllRecordsOfDoctor(Pageable pageable,Long doctor_id){
         Optional<Doctor> doctorOptional = doctorRepository.findById(doctor_id);
