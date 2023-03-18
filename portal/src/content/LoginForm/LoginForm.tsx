@@ -21,7 +21,7 @@ const LoginForm: FC = () => {
         const response = await GetUser(String(data.get('email')), String(data.get('password')));
         if (response) {
             dispatch(setUser(response));
-            navigate('/dashboards');
+            navigate('/dashboards/home');
         }
 	};
 	return(

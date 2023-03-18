@@ -44,7 +44,10 @@
   
   body {
     margin: 0;
-    font-family: "e-Ukraine-Regular" !important;
+    font-family: 'e-Ukraine-Light' !important;
+  }
+  .MuiTypography-root {
+    font-family: 'e-Ukraine-Light' !important;
   }
   .mainPageContainer {
     display: flex;

@@ -1,7 +1,6 @@
 import {
   Box,
   Tooltip,
-  Badge,
   TooltipProps,
   tooltipClasses,
   styled,
@@ -15,7 +14,7 @@ const LogoWrapper = styled(Link)(
         display: flex;
         text-decoration: none;
         width: 53px;
-        margin: 0 auto;
+        margin: auto;
         font-weight: ${theme.typography.fontWeightBold};
 `
 );
@@ -24,6 +23,7 @@ const LogoSignWrapper = styled(Box)(
   () => `
         width: 52px;
         height: 38px;
+        margin: auto;
 `
 );
 
@@ -98,31 +98,16 @@ function Logo() {
   const theme = useTheme();
 
   return (
-    <TooltipWrapper
-      title="Tokyo Free White React Typescript Admin Dashboard"
-      arrow
-    >
-      <LogoWrapper to="/overview">
-        <Badge
-          sx={{
-            '.MuiBadge-badge': {
-              fontSize: theme.typography.pxToRem(11),
-              right: -2,
-              top: 8
-            }
-          }}
-          overlap="circular"
-          color="success"
-          badgeContent="2.0"
-        >
-          <LogoSignWrapper>
-            <LogoSign>
-              <LogoSignInner />
-            </LogoSign>
-          </LogoSignWrapper>
-        </Badge>
+    <div style={{display: 'flex'}}>
+      <LogoWrapper to="/dashboards/home">
+        <LogoSignWrapper>
+          <LogoSign>
+            <LogoSignInner />
+          </LogoSign>
+        </LogoSignWrapper>
       </LogoWrapper>
-    </TooltipWrapper>
+    </div>
+    
   );
 }
 

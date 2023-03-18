@@ -18,6 +18,9 @@ const Loader = (Component) => (props) =>
 
 const LoginForm = Loader(lazy(() => import('src/content/LoginForm/LoginForm')));
 
+const HomePage = Loader(lazy(() => import('src/content/homePage/homePage')));
+
+const PersonalInfo = Loader(lazy(() => import('src/components/PersonalInfo/PersonalInfoWrapper')));
 // Dashboards
 
 const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));
@@ -135,7 +138,11 @@ const routes: RouteObject[] = [
       {
         path: 'messenger',
         element: <Messenger />
-      }
+      },
+      {
+        path: 'home',
+        element: <HomePage />
+      },
     ]
   },
   {
@@ -156,6 +163,10 @@ const routes: RouteObject[] = [
           {
             path: '',
             element: <Navigate to="details" replace />
+          },
+          {
+            path: 'personalInfo/:id',
+            element: <PersonalInfo />
           },
           {
             path: 'details',

@@ -26,9 +26,9 @@ function DashboardCrypto() {
           alignItems="stretch"
           spacing={4}
         >
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <AccountBalance />
-          </Grid>
+          </Grid> */}
           <Grid item lg={8} xs={12}>
             <Wallets />
           </Grid>
