@@ -4,10 +4,8 @@ import com.example.healthcareapp.entity.*;
 import com.example.healthcareapp.entity.Record;
 import com.example.healthcareapp.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import javax.print.Doc;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +30,8 @@ public class DataGenerator {
     private MedicalRecordRepository medicalRecordRepository;
     @Autowired
     private AnalysisRepository analysisRepository;
+    @Autowired
+    private SubjectRepository subjectRepository;
     private static List<User> users = new ArrayList<>();
     private static List<MedicalTopic> topics = new ArrayList<>();
     private static List<Doctor> doctors = new ArrayList<>();
@@ -40,6 +40,8 @@ public class DataGenerator {
     private static List<MedicalData> data = new ArrayList<>();
     private static List<Analysis> analyses = new ArrayList<>();
     private static List<MedicalRecord> medicalRecords = new ArrayList<>();
+    private static List<AnalysisSubject> subjects = new ArrayList<>();
+
     private List<User> createUsers() {
 
         users.add(User.builder()
@@ -121,7 +123,7 @@ public class DataGenerator {
                 .password("UGFzc3dvcmQ=")
                 .medicalCard(null)
                 .build());
-        List<User> sorted = users.stream().sorted((a,b)->a.getId().compareTo(b.getId())).collect(Collectors.toList());
+        List<User> sorted = users.stream().sorted((a, b) -> a.getId().compareTo(b.getId())).collect(Collectors.toList());
         return userRepository.saveAll(sorted);
 
     }
@@ -130,7 +132,7 @@ public class DataGenerator {
         doctors.add(Doctor.builder()
                 .user(users.get(0))
                 .id(1l)
-                .medicalTopic(topics.get(0))
+                .medicalTopic(topics.get(4))
                 .build());
         doctors.add(Doctor.builder()
                 .user(users.get(1))
@@ -171,7 +173,35 @@ public class DataGenerator {
                         .name("Dentistry")
                         .id(4l)
                         .build());
+        topics.add(
+                MedicalTopic.builder()
+                        .name("Oncology")
+                        .id(5l)
+                        .build());
         return mtRepository.saveAll(topics);
+    }
+
+    private List<AnalysisSubject> createSubjects() {
+
+        subjects.add(AnalysisSubject.builder()
+                .id(1l)
+                .name("α-fetoprotein")
+                .topic(topics.stream().filter(a -> a.getName().equals("Oncology"))
+                        .findAny().orElseThrow())
+                .build());
+        subjects.add(AnalysisSubject.builder()
+                .id(2l)
+                .name("Glucose")
+                .topic(topics.stream().filter(a -> a.getName().equals("Oncology"))
+                        .findAny().orElseThrow())
+                .build());
+        subjects.add(AnalysisSubject.builder()
+                .id(3l)
+                .name("Insulin")
+                .topic(topics.stream().filter(a -> a.getName().equals("Oncology"))
+                        .findAny().orElseThrow())
+                .build());
+        return subjectRepository.saveAll(subjects);
     }
 
     private List<Record> createRecords() {
@@ -225,62 +255,58 @@ public class DataGenerator {
 
     private List<Analysis> createAnalyses() {
         Date date1 = Date.from(Instant.now());
-        date1.setDate(date1.getDate()-3);
+        date1.setDate(date1.getDate() - 3);
         Date date2 = Date.from(Instant.now());
-        date2.setDate(date1.getDate()-2);
+        date2.setDate(date1.getDate() - 2);
         Date date3 = Date.from(Instant.now());
-        date3.setDate(date1.getDate()-4);
+        date3.setDate(date1.getDate() - 4);
         Date date4 = Date.from(Instant.now());
-        date4.setDate(date1.getDate()-1);
+        date4.setDate(date1.getDate() - 1);
         Date date5 = Date.from(Instant.now());
-        date5.setDate(date1.getDate()+3);
+        date5.setDate(date1.getDate() + 3);
         analyses.add(Analysis.builder()
                 .date(date1)
-                .author(doctors.get(0))
+                .author(doctors.get(1))
                 .user(users.get(0))
-                .topic(topics.get(0))
-                .subject("Left leg")
-                .result("Left leg is OK")
+                .subject(subjects.get(0))
+                .result("OK")
                 .id(1l)
                 .build());
         analyses.add(Analysis.builder()
                 .date(date2)
-                .author(doctors.get(0))
+                .author(doctors.get(1))
                 .user(users.get(0))
-                .topic(topics.get(0))
-                .subject("Right leg")
-                .result("Right leg is OK")
+                .subject(subjects.get(0))
+                .result("OK")
                 .id(2l)
                 .build());
         analyses.add(Analysis.builder()
                 .date(date1)
-                .author(doctors.get(0))
+                .author(doctors.get(1))
                 .user(users.get(0))
-                .topic(topics.get(0))
-                .subject("Right hand")
-                .result("Right hand is OK")
+                .subject(subjects.get(0))
+                .result("OK")
                 .id(3l)
                 .build());
         analyses.add(Analysis.builder()
                 .date(date1)
-                .author(doctors.get(0))
+                .author(doctors.get(1))
                 .user(users.get(0))
-                .topic(topics.get(0))
-                .subject("Left hand")
-                .result("Left hand is OK")
+                .subject(subjects.get(0))
+                .result("OK")
                 .id(4l)
                 .build());
         analyses.add(Analysis.builder()
                 .date(date1)
-                .author(doctors.get(0))
+                .author(doctors.get(1))
                 .user(users.get(0))
-                .topic(topics.get(0))
+                .subject(subjects.get(0))
                 .id(5l)
                 .build());
         return analysisRepository.saveAll(analyses);
     }
 
-    private List<MedicalCard> createCards(){
+    private List<MedicalCard> createCards() {
         cards.add(MedicalCard.builder()
                 .id(1l)
                 .user(users.get(0))
@@ -320,8 +346,8 @@ public class DataGenerator {
         return cardRepository.saveAll(cards);
     }
 
-    private List<MedicalData> createData(){
-        for(MedicalCard card : cards){
+    private List<MedicalData> createData() {
+        for (MedicalCard card : cards) {
             data.add(MedicalData.builder()
                     .id(card.getId())
                     .topic(topics.get(0))
@@ -331,29 +357,30 @@ public class DataGenerator {
         }
         return dataRepository.saveAll(data);
     }
-    List<MedicalRecord> createMedRecords(){
-        medicalRecords.add( MedicalRecord.builder()
+
+    List<MedicalRecord> createMedRecords() {
+        medicalRecords.add(MedicalRecord.builder()
                 .id(1l)
                 .medicalData(data.get(0))
                 .author(doctors.get(0))
                 .subject("Left leg")
                 .data("Left leg is OK")
                 .build());
-        medicalRecords.add( MedicalRecord.builder()
+        medicalRecords.add(MedicalRecord.builder()
                 .id(2l)
                 .medicalData(data.get(0))
                 .author(doctors.get(0))
                 .subject("Right leg")
                 .data("Right leg is OK")
                 .build());
-        medicalRecords.add( MedicalRecord.builder()
+        medicalRecords.add(MedicalRecord.builder()
                 .id(3l)
                 .medicalData(data.get(0))
                 .author(doctors.get(0))
                 .subject("Left hand")
                 .data("Left hand is OK")
                 .build());
-        medicalRecords.add( MedicalRecord.builder()
+        medicalRecords.add(MedicalRecord.builder()
                 .id(4l)
                 .medicalData(data.get(0))
                 .author(doctors.get(0))
@@ -362,15 +389,17 @@ public class DataGenerator {
                 .build());
         return medicalRecordRepository.saveAll(medicalRecords);
     }
+
     public void generate() {
         users = createUsers();
         topics = createTopics();
         doctors = createDoctors();
+        subjects = createSubjects();
         records = createRecords();
         analyses = createAnalyses();
         cards = createCards();
         data = createData();
-        medicalRecords =createMedRecords();
+        medicalRecords = createMedRecords();
         users = userRepository.findAll();
         users = null;
     }

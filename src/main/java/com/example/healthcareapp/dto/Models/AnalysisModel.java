@@ -17,7 +17,7 @@ public class AnalysisModel {
 
     private Long id;
 
-    private String subject;
+    private SubjectModel subject;
 
     private String result;
 
@@ -27,5 +27,4 @@ public class AnalysisModel {
 
     private UserModel user;
 
-    private MedicalTopic topic;
 }

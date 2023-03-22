@@ -3,6 +3,7 @@ package com.example.healthcareapp.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import javax.security.auth.Subject;
 import java.util.Date;
 
 @Entity
@@ -16,8 +17,9 @@ public class Analysis {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @Column
-    private String subject;
+    @ManyToOne
+    @JoinColumn(name ="subject")
+    private AnalysisSubject subject;
     @Column
     private String result;
     @Column
@@ -28,9 +30,6 @@ public class Analysis {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne
-    @JoinColumn(name="topic_id")
-    private MedicalTopic topic;
 
 
 

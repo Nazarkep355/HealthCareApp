@@ -1,9 +1,6 @@
 package com.example.healthcareapp.controller;
 
-import com.example.healthcareapp.dto.Models.AnalysisModel;
-import com.example.healthcareapp.dto.Models.CreateRecordModel;
-import com.example.healthcareapp.dto.Models.DoctorModel;
-import com.example.healthcareapp.dto.Models.UserModel;
+import com.example.healthcareapp.dto.Models.*;
 import com.example.healthcareapp.dto.ResponseMessage;
 import com.example.healthcareapp.entity.MedicalTopic;
 import com.example.healthcareapp.service.AnalysesService;
@@ -35,21 +32,25 @@ public class AnalysisController {
     public ResponseEntity scheduleAnalysis(String date,
                                            Long user_id,
                                            Long doctor_id,
-                                           Long topic_id) {
+                                           Long subject_id) {
         Date date1 = null;
         if (StringUtils.isNumeric(date)) {
             date1 = new Date(Long.parseLong(date));
         } else {
             date1 = java.sql.Timestamp.valueOf(LocalDateTime.parse(date));
         }
-        CreateRecordModel recordModel = CreateRecordModel.builder()
-                .topic(MedicalTopic.builder().id(topic_id).build())
-                .author(DoctorModel.builder().id(doctor_id).build())
+        AnalysisModel analysisModel = AnalysisModel.builder()
                 .user(UserModel.builder().id(user_id).build())
-                .date(date1).build();
+                .author(DoctorModel.builder().id(doctor_id).build())
+                .subject(SubjectModel.builder().id(subject_id).build())
+                .build();
 
-        return ErrorCatcher.catchException(() -> analysesService.scheduleAnalysis(recordModel));
+        return ErrorCatcher.catchException(() -> analysesService.scheduleAnalysis(analysisModel));
 
 
+    }
+    @GetMapping("/subjects")
+    public ResponseEntity getAllSubjects(Pageable pageable){
+        return ErrorCatcher.catchException(()->analysesService.getAllSubjects(pageable));
     }
 }
