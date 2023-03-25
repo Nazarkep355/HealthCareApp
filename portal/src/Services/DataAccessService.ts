@@ -32,6 +32,11 @@ export const GetAllRecordByUser = async (userId: number): Promise<DoctorRecord[]
 };
 
 export const RecordToDoctor = async (date: string, userId: number, doctorId: number, topicId: number): Promise<void> => {
-    const response = await axios.post(`${apiUrl}records?date=${date}&user_id=${userId}&doctor_id=${doctorId}&topicId=${topicId}`);
+    const response = await axios.post(`${apiUrl}records?date=${date}&user_id=${userId}&doctor_id=${doctorId}&topic_id=${topicId}`);
+    return;
+};
+
+export const RecordToAnalyse = async (date: string, userId: number, doctorId: number, subjectId: number): Promise<void> => {
+    const response = await axios.post(`${apiUrl}analyses?date=${date}&user_id=${userId}&doctor_id=${doctorId}&subject_id=${subjectId}`);
     return;
 };

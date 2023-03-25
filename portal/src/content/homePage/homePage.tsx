@@ -7,7 +7,7 @@ import CardList from 'src/components/Card/CardList';
 import Footer from 'src/components/Footer';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import Doctor from 'src/models/Doctor';
-import { GetAllAnalyses, GetAllDoctors, RecordToDoctor } from 'src/Services/DataAccessService';
+import { GetAllAnalyses, GetAllDoctors, RecordToAnalyse, RecordToDoctor } from 'src/Services/DataAccessService';
 import PageHeader from '../dashboards/Crypto/PageHeader';
 import { useQuery } from 'react-query';
 import Analyse from 'src/models/Analyse';
@@ -52,7 +52,7 @@ const HomePage: FC = () => {
 	};
 	const handleCloseRegDoctor = async (closeType: CloseType, data: any): Promise<void> => {
 		console.log(data);
-		if (closeType == CloseType.OK)
+		if (closeType === CloseType.OK)
 			await RecordToDoctor(data.dateTime, userId, data.doctor.id, data.doctor.medicalTopic.id);
 		setIsModalOpenDoc(false);
 	}
@@ -64,8 +64,8 @@ const HomePage: FC = () => {
 	};
 	const handleCloseRegAnalyse = async (closeType: CloseType, data: any): Promise<void> => {
 		console.log(data);
-		if (closeType == CloseType.OK)
-			await RecordToDoctor(data.dateTime, userId, data.doctor.id, data.doctor.medicalTopic.id);
+		if (closeType === CloseType.OK)
+			await RecordToAnalyse(data.dateTime, userId, data.analyse.id, data.analyse.id);
 		setIsModalOpenAnalyses(false);
 	}
 	// #endregion

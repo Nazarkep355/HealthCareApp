@@ -47,7 +47,7 @@ const RegisterToDoctor: FC<IRegisterToDoctorProps> = (props) => {
                         .add(hour,'hour')
                         .add(minutes,'minutes');
         const result = {
-            dateTime: String(dateTime.unix()),
+            dateTime: String(dateTime.toDate().getTime()),
             doctor: doctor
         }
         props.handleClose(CloseType.OK, result)
