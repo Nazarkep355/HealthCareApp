@@ -48,8 +48,8 @@ const RegisterToAnalyses: FC<IRegisterToAnalysesProps> = (props) => {
                         .add(hour,'hour')
                         .add(minutes,'minutes');
         const result = {
-            dateTime: String(dateTime.unix()),
-            doctor: analyse
+            dateTime: String(dateTime.toDate().getTime()),
+            analyse: analyse
         }
         props.handleClose(CloseType.OK, result)
     };

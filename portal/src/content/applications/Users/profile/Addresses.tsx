@@ -77,7 +77,7 @@ function Addresses() {
               variant="outlined"
               endIcon={<ArrowForwardTwoTone />}
             >
-              Manage
+              Змінити
             </Button>
           </Box>
         </Card>
