@@ -49,15 +49,23 @@ const AvatarAddWrapper = styled(Avatar)(
 `
 );
 export interface ICardItemProps {
+	id: number;
 	avatar: string;
 	title: string;
 	subtitle: string;
 	tooltip: string;
+	titleUnderPhoto: string;
+	handleClick?: (id: number) => void
 }
 
 const CardItem: FC<ICardItemProps> = (props) => {
+	const handleOpen = () => {
+		if(props.handleClick) {
+			props.handleClick(props.id)
+		}
+	}
 	return (
-		<Grid xs={6} sm={3} md={3} item>
+		<Grid xs={6} sm={3} md={3} item onClick={handleOpen}>
 			<Tooltip arrow title={props.tooltip}>
 				<CardActionArea
 					sx={{
@@ -76,11 +84,11 @@ const CardItem: FC<ICardItemProps> = (props) => {
 								src={props.avatar}
 								/>
 							</AvatarWrapper>
-							<Typography variant="h5" noWrap>
+							{/* <Typography variant="h5" noWrap>
 								{props.title}
-							</Typography>
+							</Typography> */}
 							<Typography variant="subtitle1" noWrap>
-								{props.subtitle}
+								{props.titleUnderPhoto}
 							</Typography>
 							<Box
 								sx={{
@@ -98,6 +106,7 @@ const CardItem: FC<ICardItemProps> = (props) => {
 					</Card>
 				</CardActionArea>
           	</Tooltip>
+			
 		</Grid>
 	);
 };

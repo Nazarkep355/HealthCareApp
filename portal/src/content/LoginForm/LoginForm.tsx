@@ -8,7 +8,7 @@ import Container from '@mui/material/Container';
 import { FC } from 'react';
 import './loginForm.scss';
 import { useNavigate } from 'react-router-dom';
-import { GetUser } from 'src/Services/UserService';
+import { GetUser } from 'src/Services/DataAccessService';
 import { useDispatch } from 'react-redux';
 import { setUser } from 'src/reducers/UserSlice';
 
