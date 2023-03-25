@@ -84,7 +84,7 @@ const CardCc = styled(Card)(
 
 function MyCards() {
   const data = {
-    savedCards: 7
+    savedCards: 1
   };
 
   const [selectedValue, setSelectedValue] = useState('a');
@@ -97,7 +97,7 @@ function MyCards() {
 
   return (
     <Card>
-      <CardHeader subheader={data.savedCards + ' saved cards'} title="Cards" />
+      <CardHeader subheader={data.savedCards + ' збережені'} title="Страхові поліси" />
       <Divider />
       <Box p={3}>
         <Grid container spacing={3}>
@@ -105,15 +105,16 @@ function MyCards() {
             <CardCc sx={{ px: 2, pt: 2, pb: 1 }}>
               <Box display="flex" alignItems="center">
                 <CardLogo
-                  src="/static/images/placeholders/logo/visa.png"
+                  src="/static/images/logo/oranta-logo.png"
                   alt="Visa"
+                  width={'100px'}
                 />
                 <Box>
                   <Typography variant="h3" fontWeight="normal">
                     •••• 6879
                   </Typography>
                   <Typography variant="subtitle2">
-                    Expires:{' '}
+                    Закінчується:{' '}
                     <Typography component="span" color="text.primary">
                       12/24
                     </Typography>
@@ -126,20 +127,7 @@ function MyCards() {
                 alignItems="center"
                 justifyContent="space-between"
               >
-                <FormControlLabel
-                  value="a"
-                  control={
-                    <Radio
-                      checked={selectedValue === 'a'}
-                      onChange={handleChange}
-                      value="a"
-                      color="primary"
-                      name="primary-card"
-                    />
-                  }
-                  label="Primary"
-                />
-                <Tooltip arrow title="Remove this card">
+                <Tooltip arrow title="Видалити">
                   <IconButtonError onClick={() => handleDelete()}>
                     <DeleteTwoToneIcon fontSize="small" />
                   </IconButtonError>
@@ -151,17 +139,18 @@ function MyCards() {
             <CardCc sx={{ px: 2, pt: 2, pb: 1 }}>
               <Box display="flex" alignItems="center">
                 <CardLogo
-                  src="/static/images/placeholders/logo/mastercard.png"
+                  src="/static/images/logo/oranta-logo.png"
                   alt="Visa"
+                  width={'100px'}
                 />
                 <Box>
                   <Typography variant="h3" fontWeight="normal">
-                    •••• 4634
+                    •••• 4563
                   </Typography>
                   <Typography variant="subtitle2">
-                    Expires:{' '}
+                    Закінчується:{' '}
                     <Typography component="span" color="text.primary">
-                      6/22
+                      12/24
                     </Typography>
                   </Typography>
                 </Box>
@@ -172,20 +161,7 @@ function MyCards() {
                 alignItems="center"
                 justifyContent="space-between"
               >
-                <FormControlLabel
-                  value="b"
-                  control={
-                    <Radio
-                      checked={selectedValue === 'b'}
-                      onChange={handleChange}
-                      value="b"
-                      color="primary"
-                      name="primary-card"
-                    />
-                  }
-                  label="Primary"
-                />
-                <Tooltip arrow title="Remove this card">
+                <Tooltip arrow title="Видалити">
                   <IconButtonError onClick={() => handleDelete()}>
                     <DeleteTwoToneIcon fontSize="small" />
                   </IconButtonError>

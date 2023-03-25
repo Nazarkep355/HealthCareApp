@@ -4,6 +4,7 @@ import { map } from 'lodash'
 import Card, { ICardItemProps } from './Card';
 import RegisterToDoctor, { IRegisterToDoctorProps } from '../ModalWidows/RegisterToDoctor';
 import { JsxElement } from 'typescript';
+import { nanoid } from 'nanoid';
 
 interface IPopupCardProps {
 	modalWindow: JsxElement;
@@ -29,7 +30,7 @@ const CardList: FC<ICardListProps> = (props) => {
 				</Box>
 				<Grid container spacing={3}>
 					{map(props.cards, (card) => {
-						return <Card {...card} key={card.title} handleClick={props.onCardClick}/>;
+						return <Card {...card} key={nanoid()} handleClick={props.onCardClick}/>;
 					})}
 				</Grid>
 		</>

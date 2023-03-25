@@ -82,22 +82,14 @@ const ProfileCover = ({ user }) => {
   return (
     <>
       <Box display="flex" mb={3}>
-        <Tooltip arrow placement="top" title="Go back">
-          <IconButton color="primary" sx={{ p: 2, mr: 2 }}>
-            <ArrowBackTwoToneIcon />
-          </IconButton>
-        </Tooltip>
         <Box>
           <Typography variant="h3" component="h3" gutterBottom>
-            Profile for {user.name}
-          </Typography>
-          <Typography variant="subtitle2">
-            This is a profile page. Easy to modify, always blazing fast
+            Особистий кабінет {user.name}
           </Typography>
         </Box>
       </Box>
       <CardCover>
-        <CardMedia image={user.coverImg} />
+        <CardMedia image={'/static/images/placeholders/covers/5.jpg'} />
         <CardCoverAction>
           <Input accept="image/*" id="change-cover" multiple type="file" />
           <label htmlFor="change-cover">
@@ -106,13 +98,13 @@ const ProfileCover = ({ user }) => {
               variant="contained"
               component="span"
             >
-              Change cover
+              Змінити фон
             </Button>
           </label>
         </CardCoverAction>
       </CardCover>
       <AvatarWrapper>
-        <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+        <Avatar variant="rounded" alt={user.name} src={'/static/images/avatars/4.jpg'} />
         <ButtonUploadWrapper>
           <Input
             accept="image/*"
@@ -127,7 +119,7 @@ const ProfileCover = ({ user }) => {
           </label>
         </ButtonUploadWrapper>
       </AvatarWrapper>
-      <Box py={2} pl={2} mb={3}>
+      {/* <Box py={2} pl={2} mb={3}>
         <Typography gutterBottom variant="h4">
           {user.name}
         </Typography>
@@ -160,7 +152,7 @@ const ProfileCover = ({ user }) => {
             See all {user.followers} connections
           </Button>
         </Box>
-      </Box>
+      </Box> */}
     </>
   );
 };

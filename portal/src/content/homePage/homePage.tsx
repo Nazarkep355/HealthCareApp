@@ -73,17 +73,17 @@ const HomePage: FC = () => {
 	// #region useEffects
 	useEffect(() => {
 		setAnalyses(analysesData);
-			const docCards = map(analysesData, (analyse: Analyse) => {
-				return {
-					avatar: '/static/images/avatars/4.jpg',
-					title: analyse.name,
-					subtitle: '',
-					tooltip: 'Записатися',
-					titleUnderPhoto: analyse.topic.name,
-					id: analyse.id
-				} as ICardItemProps;
-			});
-			setAnalysesCard(docCards);
+		const docCards = map(analysesData, (analyse: Analyse) => {
+			return {
+				avatar: '/static/images/avatars/4.jpg',
+				title: analyse.name,
+				subtitle: '',
+				tooltip: 'Записатися',
+				titleUnderPhoto: analyse.topic.name,
+				id: analyse.id
+			} as ICardItemProps;
+		});
+		setAnalysesCard(docCards);
 	}, [analysesData]);
 
 	useEffect(() => {

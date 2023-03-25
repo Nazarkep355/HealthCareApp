@@ -27,21 +27,20 @@ function Addresses() {
       <Grid item xs={12} sm={6}>
         <Card>
           <CardHeader
-            title="Delivery Addresses"
-            subheader={addresses.delivery + ' saved addresses'}
+            title="Адреса"
           />
           <Divider />
           <Box p={2}>
             <Typography variant="caption" fontWeight="bold">
-              Favourite
+              Основна
             </Typography>
             <Box sx={{ minHeight: { xs: 0, md: 242 } }} p={2}>
-              <Typography variant="h5">Kadin Westervelt</Typography>
+              <Typography variant="h5">Дім</Typography>
               <Typography variant="h5" sx={{ py: 1 }} fontWeight="normal">
                 714-650-6297
               </Typography>
               <Typography variant="subtitle1">
-                348 W. Goldfield Street Bethel Park, PA 15102
+                Проспект Любомира Гузара 1
               </Typography>
             </Box>
             <Button
@@ -49,7 +48,7 @@ function Addresses() {
               variant="outlined"
               endIcon={<ArrowForwardTwoTone />}
             >
-              Manage
+              Змінити
             </Button>
           </Box>
         </Card>
@@ -57,21 +56,20 @@ function Addresses() {
       <Grid item xs={12} sm={6}>
         <Card>
           <CardHeader
-            title="Shipping Addresses"
-            subheader={addresses.shipping + ' saved addresses'}
+            title="Адреса"
           />
           <Divider />
           <Box p={2}>
             <Typography variant="caption" fontWeight="bold">
-              Favourite
+              Запасна
             </Typography>
             <Box sx={{ minHeight: { xs: 0, md: 242 } }} p={2}>
-              <Typography variant="h5">Kadin Westervelt</Typography>
+              <Typography variant="h5">Робота</Typography>
               <Typography variant="h5" sx={{ py: 1 }} fontWeight="normal">
                 714-650-6297
               </Typography>
               <Typography variant="subtitle1">
-                10 E. Wrangler Avenue Sioux Falls, SD 57103
+                проспект Митрополита Андрія Шептицького 4а
               </Typography>
             </Box>
             <Button
