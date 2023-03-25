@@ -48,8 +48,8 @@ public class DataGenerator {
                 .id(2l)
                 .role(UserRole.Doctor)
                 .email("doctor@gmail.com")
-                .firstName("John")
-                .secondName("Watson")
+                .firstName("Джон")
+                .secondName("Ватсон")
                 .password("SDBsbWVzU2hlcmxvY2s=")
                 .medicalCard(null)
                 .build());
@@ -57,8 +57,8 @@ public class DataGenerator {
                 .id(6l)
                 .role(UserRole.Doctor)
                 .email("doctor1@gmail.com")
-                .firstName("Lucius")
-                .secondName("Fox")
+                .firstName("Люціус")
+                .secondName("Фокс")
                 .password("UGFzc3dvcmQ=")
                 .medicalCard(null)
                 .build());
@@ -66,8 +66,8 @@ public class DataGenerator {
                 .id(7l)
                 .role(UserRole.Doctor)
                 .email("doctor2@gmail.com")
-                .firstName("Akiko")
-                .secondName("Yosano")
+                .firstName("Акіко")
+                .secondName("Йосано")
                 .password("UGFzc3dvcmQ=")
                 .medicalCard(null)
                 .build());
@@ -76,22 +76,22 @@ public class DataGenerator {
                 .id(9l)
                 .role(UserRole.Doctor)
                 .email("doctor3@gmail.com")
-                .firstName("Orihime")
-                .secondName("Inoue")
+                .firstName("Оріхіме")
+                .secondName("Іноуе")
                 .password("UGFzc3dvcmQ=")
                 .medicalCard(null)
                 .build());
 
         users.add(new User(1l, "email@mail.com",
                 "UGFzc3dvcmQ=",
-                "Andy", "Daniel", UserRole.Patient,
+                "Октавіан", "Август", UserRole.Patient,
                 null));
         users.add(User.builder()
                 .id(3l)
                 .role(UserRole.Patient)
                 .email("user1@gmail.com")
-                .firstName("Sherlock")
-                .secondName("Holmes")
+                .firstName("Шерлок")
+                .secondName("Холмс")
                 .password("UGFzc3dvcmQ=")
                 .medicalCard(null)
                 .build());
@@ -99,17 +99,17 @@ public class DataGenerator {
                 .id(4l)
                 .role(UserRole.Patient)
                 .email("user2@gmail.com")
-                .firstName("Jim")
-                .secondName("Gordon")
+                .firstName("Джим")
+                .secondName("Гордон")
                 .password("UGFzc3dvcmQ=")
                 .medicalCard(null)
                 .build());
         users.add(User.builder()
                 .id(5l)
-                .role(UserRole.Patient)
+                .role(UserRole.Doctor)
                 .email("user3@gmail.com")
-                .firstName("Barbara")
-                .secondName("Gordon")
+                .firstName("Барбара")
+                .secondName("Гордон")
                 .password("UGFzc3dvcmQ=")
                 .medicalCard(null)
                 .build());
@@ -118,8 +118,8 @@ public class DataGenerator {
                 .id(8l)
                 .role(UserRole.Patient)
                 .email("user4@gmail.com")
-                .firstName("Dazai")
-                .secondName("Osamu")
+                .firstName("Дазай")
+                .secondName("Осаму")
                 .password("UGFzc3dvcmQ=")
                 .medicalCard(null)
                 .build());
@@ -149,34 +149,44 @@ public class DataGenerator {
                 .id(4l)
                 .medicalTopic(topics.get(3))
                 .build());
+        doctors.add(Doctor.builder()
+                .user(users.stream().filter(a->a.getFirstName().equals("Барбара")).findAny().get())
+                .id(5l)
+                .medicalTopic(topics.get(3))
+                .build());
         return doctorRepository.saveAll(doctors);
     }
 
     private List<MedicalTopic> createTopics() {
         topics.add(
                 MedicalTopic.builder()
-                        .name("Surgery")
+                        .name("Хіругія")
                         .id(1l)
                         .build());
         topics.add(
                 MedicalTopic.builder()
-                        .name("Ophthalmology")
+                        .name("Офтальмологія")
                         .id(2l)
                         .build());
         topics.add(
                 MedicalTopic.builder()
-                        .name("Gastroenterology")
+                        .name("Гастроентерологія")
                         .id(3l)
                         .build());
         topics.add(
                 MedicalTopic.builder()
-                        .name("Dentistry")
+                        .name("Стоматологія")
                         .id(4l)
                         .build());
         topics.add(
                 MedicalTopic.builder()
-                        .name("Oncology")
+                        .name("Онкологія")
                         .id(5l)
+                        .build());
+        topics.add(
+                MedicalTopic.builder()
+                        .id(6l)
+                        .name("Кардіологія")
                         .build());
         return mtRepository.saveAll(topics);
     }
@@ -185,20 +195,32 @@ public class DataGenerator {
 
         subjects.add(AnalysisSubject.builder()
                 .id(1l)
-                .name("α-fetoprotein")
-                .topic(topics.stream().filter(a -> a.getName().equals("Oncology"))
+                .name("α-фетофтореїн")
+                .topic(topics.stream().filter(a -> a.getName().equals("Онкологія"))
                         .findAny().orElseThrow())
                 .build());
         subjects.add(AnalysisSubject.builder()
                 .id(2l)
-                .name("Glucose")
-                .topic(topics.stream().filter(a -> a.getName().equals("Oncology"))
+                .name("Глюкоза")
+                .topic(topics.stream().filter(a -> a.getName().equals("Онкологія"))
                         .findAny().orElseThrow())
                 .build());
         subjects.add(AnalysisSubject.builder()
                 .id(3l)
-                .name("Insulin")
-                .topic(topics.stream().filter(a -> a.getName().equals("Oncology"))
+                .name("Інсулін")
+                .topic(topics.stream().filter(a -> a.getName().equals("Онкологія"))
+                        .findAny().orElseThrow())
+                .build());
+        subjects.add(AnalysisSubject.builder()
+                .id(4l)
+                .name("Аполіпопротеїн A1 (APOA1)")
+                .topic(topics.stream().filter(a -> a.getName().equals("Кардіологія"))
+                        .findAny().orElseThrow())
+                .build());
+        subjects.add(AnalysisSubject.builder()
+                .id(5l)
+                .name("Глікований гемоглобін (HbA1c)")
+                .topic(topics.stream().filter(a -> a.getName().equals("Кардіологія"))
                         .findAny().orElseThrow())
                 .build());
         return subjectRepository.saveAll(subjects);
@@ -269,7 +291,7 @@ public class DataGenerator {
                 .author(doctors.get(1))
                 .user(users.get(0))
                 .subject(subjects.get(0))
-                .result("OK")
+                .result("професор латини з коледжу Хемпдін-Сидні, що у Вірджінії, вивчав одне з найменш зрозумілих латинських слів - consectetur - з уривку Lorem Ipsum, і у пошуку цього слова в класичній літературі знайшов безсумнівне джерело.")
                 .id(1l)
                 .build());
         analyses.add(Analysis.builder()
@@ -277,31 +299,40 @@ public class DataGenerator {
                 .author(doctors.get(1))
                 .user(users.get(0))
                 .subject(subjects.get(0))
-                .result("OK")
+                .result("професор латини з коледжу Хемпдін-Сидні, що у Вірджінії, вивчав одне з найменш зрозумілих латинських слів - consectetur - з уривку Lorem Ipsum, і у пошуку цього слова в класичній літературі знайшов безсумнівне джерело.")
                 .id(2l)
                 .build());
         analyses.add(Analysis.builder()
-                .date(date1)
+                .date(date3)
                 .author(doctors.get(1))
                 .user(users.get(0))
                 .subject(subjects.get(0))
-                .result("OK")
+                .result("професор латини з коледжу Хемпдін-Сидні, що у Вірджінії, вивчав одне з найменш зрозумілих латинських слів - consectetur - з уривку Lorem Ipsum, і у пошуку цього слова в класичній літературі знайшов безсумнівне джерело.")
                 .id(3l)
                 .build());
         analyses.add(Analysis.builder()
-                .date(date1)
+                .date(date4)
                 .author(doctors.get(1))
                 .user(users.get(0))
                 .subject(subjects.get(0))
-                .result("OK")
+                .result("Oпрофесор латини з коледжу Хемпдін-Сидні, що у Вірджінії, вивчав одне з найменш зрозумілих латинських слів - consectetur - з уривку Lorem Ipsum, і у пошуку цього слова в класичній літературі знайшов безсумнівне джерело")
                 .id(4l)
                 .build());
+
         analyses.add(Analysis.builder()
-                .date(date1)
+                .date(date5)
                 .author(doctors.get(1))
                 .user(users.get(0))
                 .subject(subjects.get(0))
                 .id(5l)
+                .build());
+        analyses.add(Analysis.builder()
+                .date(date1)
+                .author(doctors.get(1))
+                .user(users.get(0))
+                .subject(subjects.get(0))
+                .result("Oпрофесор латини з коледжу Хемпдін-Сидні, що у Вірджінії, вивчав одне з найменш зрозумілих латинських слів - consectetur - з уривку Lorem Ipsum, і у пошуку цього слова в класичній літературі знайшов безсумнівне джерело")
+                .id(6l)
                 .build());
         return analysisRepository.saveAll(analyses);
     }
@@ -363,29 +394,43 @@ public class DataGenerator {
                 .id(1l)
                 .medicalData(data.get(0))
                 .author(doctors.get(0))
-                .subject("Left leg")
-                .data("Left leg is OK")
+                .subject("Ліва нога")
+                .data("професор латини з коледжу Хемпдін-Сидні, що у Вірджінії, вивчав одне з найменш зрозумілих латинських слів - consectetur - з уривку Lorem Ipsum, і у пошуку цього слова в класичній літературі знайшов безсумнівне джерело.")
                 .build());
         medicalRecords.add(MedicalRecord.builder()
                 .id(2l)
                 .medicalData(data.get(0))
                 .author(doctors.get(0))
-                .subject("Right leg")
-                .data("Right leg is OK")
+                .subject("Права нога")
+                .data("професор латини з коледжу Хемпдін-Сидні, що у Вірджінії, вивчав одне з найменш зрозумілих латинських слів - consectetur - з уривку Lorem Ipsum, і у пошуку цього слова в класичній літературі знайшов безсумнівне джерело.")
                 .build());
         medicalRecords.add(MedicalRecord.builder()
                 .id(3l)
                 .medicalData(data.get(0))
                 .author(doctors.get(0))
-                .subject("Left hand")
-                .data("Left hand is OK")
+                .subject("Ліва рука")
+                .data("професор латини з коледжу Хемпдін-Сидні, що у Вірджінії, вивчав одне з найменш зрозумілих латинських слів - consectetur - з уривку Lorem Ipsum, і у пошуку цього слова в класичній літературі знайшов безсумнівне джерело.")
                 .build());
         medicalRecords.add(MedicalRecord.builder()
                 .id(4l)
                 .medicalData(data.get(0))
                 .author(doctors.get(0))
-                .subject("Right hand")
-                .data("Right hand is OK")
+                .subject("Права рука")
+                .data("професор латини з коледжу Хемпдін-Сидні, що у Вірджінії, вивчав одне з найменш зрозумілих латинських слів - consectetur - з уривку Lorem Ipsum, і у пошуку цього слова в класичній літературі знайшов безсумнівне джерело.")
+                .build());
+        medicalRecords.add(MedicalRecord.builder()
+                .id(4l)
+                .medicalData(data.get(0))
+                .author(doctors.get(0))
+                .subject("Нирки")
+                .data("професор латини з коледжу Хемпдін-Сидні, що у Вірджінії, вивчав одне з найменш зрозумілих латинських слів - consectetur - з уривку Lorem Ipsum, і у пошуку цього слова в класичній літературі знайшов безсумнівне джерело.")
+                .build());
+        medicalRecords.add(MedicalRecord.builder()
+                .id(4l)
+                .medicalData(data.get(0))
+                .author(doctors.get(0))
+                .subject("Печінка")
+                .data("професор латини з коледжу Хемпдін-Сидні, що у Вірджінії, вивчав одне з найменш зрозумілих латинських слів - consectetur - з уривку Lorem Ipsum, і у пошуку цього слова в класичній літературі знайшов безсумнівне джерело.")
                 .build());
         return medicalRecordRepository.saveAll(medicalRecords);
     }
